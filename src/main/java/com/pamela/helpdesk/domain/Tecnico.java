@@ -16,7 +16,7 @@ public class Tecnico extends Pessoa{
         super();
     }
 
-    public Tecnico(Integer id, String nome, String cpf, String email, String senha, List<Chamado> chamados) {
+    public Tecnico(Integer id, String nome, String cpf, String email, String senha) {
         super(id, nome, cpf, email, senha);
         this.chamados = chamados;
     }
