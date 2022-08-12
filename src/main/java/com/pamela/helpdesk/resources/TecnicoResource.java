@@ -40,4 +40,10 @@ public class TecnicoResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<TecnicoDTO> delete(@PathVariable Integer id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
