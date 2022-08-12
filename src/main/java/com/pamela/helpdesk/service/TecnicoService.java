@@ -1,6 +1,7 @@
 package com.pamela.helpdesk.service;
 
 import com.pamela.helpdesk.domain.Tecnico;
+import com.pamela.helpdesk.domain.dtos.TecnicoDTO;
 import com.pamela.helpdesk.repository.TecnicoRepository;
 import com.pamela.helpdesk.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,11 @@ public class TecnicoService {
 
     public List<Tecnico> findAll() {
         return repository.findAll();
+    }
+
+    public Tecnico create(TecnicoDTO objDTO) {
+        objDTO.setId(null);
+        Tecnico newObj = new Tecnico(objDTO);
+        return  repository.save(newObj);
     }
 }
