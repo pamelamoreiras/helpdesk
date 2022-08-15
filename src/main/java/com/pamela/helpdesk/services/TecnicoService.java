@@ -1,15 +1,14 @@
-package com.pamela.helpdesk.service;
+package com.pamela.helpdesk.services;
 
-import com.pamela.helpdesk.domain.Cliente;
 import com.pamela.helpdesk.domain.Pessoa;
 import com.pamela.helpdesk.domain.Tecnico;
-import com.pamela.helpdesk.domain.dtos.ClienteDTO;
 import com.pamela.helpdesk.domain.dtos.TecnicoDTO;
 import com.pamela.helpdesk.repository.PessoaRepository;
 import com.pamela.helpdesk.repository.TecnicoRepository;
-import com.pamela.helpdesk.service.exceptions.DataIntegrityViolationException;
-import com.pamela.helpdesk.service.exceptions.ObjectNotFoundException;
+import com.pamela.helpdesk.services.exceptions.DataIntegrityViolationException;
+import com.pamela.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +23,9 @@ public class TecnicoService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     public Tecnico findById(Integer id){
         Optional<Tecnico> obj = tecnicoRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
@@ -35,6 +37,7 @@ public class TecnicoService {
 
     public Tecnico create(TecnicoDTO objDTO) {
         objDTO.setId(null);
+        objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         validaPorCpfEEmail(objDTO);
         Tecnico newObj = new Tecnico(objDTO);
         return  tecnicoRepository.save(newObj);

@@ -1,4 +1,4 @@
-package com.pamela.helpdesk.service;
+package com.pamela.helpdesk.services;
 
 import com.pamela.helpdesk.domain.Chamado;
 import com.pamela.helpdesk.domain.Cliente;
@@ -7,7 +7,7 @@ import com.pamela.helpdesk.domain.dtos.ChamadoDTO;
 import com.pamela.helpdesk.domain.enums.Prioridade;
 import com.pamela.helpdesk.domain.enums.Status;
 import com.pamela.helpdesk.repository.ChamadoRepository;
-import com.pamela.helpdesk.service.exceptions.ObjectNotFoundException;
+import com.pamela.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

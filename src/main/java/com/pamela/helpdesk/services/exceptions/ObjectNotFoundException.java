@@ -1,4 +1,4 @@
-package com.pamela.helpdesk.service.exceptions;
+package com.pamela.helpdesk.services.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException{
     private static final long serialVersionUID = 1L;

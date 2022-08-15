@@ -1,6 +1,6 @@
 package com.pamela.helpdesk.config;
 
-import com.pamela.helpdesk.service.DBService;
+import com.pamela.helpdesk.services.DBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

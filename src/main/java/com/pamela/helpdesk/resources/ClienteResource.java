@@ -1,10 +1,8 @@
 package com.pamela.helpdesk.resources;
 
-import ch.qos.logback.core.net.server.Client;
 import com.pamela.helpdesk.domain.Cliente;
 import com.pamela.helpdesk.domain.dtos.ClienteDTO;
-import com.pamela.helpdesk.domain.dtos.TecnicoDTO;
-import com.pamela.helpdesk.service.ClienteService;
+import com.pamela.helpdesk.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

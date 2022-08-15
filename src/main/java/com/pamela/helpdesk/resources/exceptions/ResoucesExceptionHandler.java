@@ -1,7 +1,7 @@
 package com.pamela.helpdesk.resources.exceptions;
 
-import com.pamela.helpdesk.service.exceptions.DataIntegrityViolationException;
-import com.pamela.helpdesk.service.exceptions.ObjectNotFoundException;
+import com.pamela.helpdesk.services.exceptions.DataIntegrityViolationException;
+import com.pamela.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

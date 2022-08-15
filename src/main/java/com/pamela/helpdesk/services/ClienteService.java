@@ -1,13 +1,14 @@
-package com.pamela.helpdesk.service;
+package com.pamela.helpdesk.services;
 
 import com.pamela.helpdesk.domain.Cliente;
 import com.pamela.helpdesk.domain.Pessoa;
 import com.pamela.helpdesk.domain.dtos.ClienteDTO;
 import com.pamela.helpdesk.repository.ClienteRepository;
 import com.pamela.helpdesk.repository.PessoaRepository;
-import com.pamela.helpdesk.service.exceptions.DataIntegrityViolationException;
-import com.pamela.helpdesk.service.exceptions.ObjectNotFoundException;
+import com.pamela.helpdesk.services.exceptions.DataIntegrityViolationException;
+import com.pamela.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class ClienteService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     public Cliente findById(Integer id){
         Optional<Cliente> obj = clienteRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
@@ -33,6 +37,7 @@ public class ClienteService {
 
     public Cliente create(ClienteDTO objDTO) {
         objDTO.setId(null);
+        objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         validaPorCpfEEmail(objDTO);
         Cliente newObj = new Cliente(objDTO);
         return  clienteRepository.save(newObj);

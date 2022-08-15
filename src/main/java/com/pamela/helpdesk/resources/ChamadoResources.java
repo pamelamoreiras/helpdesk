@@ -2,13 +2,12 @@ package com.pamela.helpdesk.resources;
 
 import com.pamela.helpdesk.domain.Chamado;
 import com.pamela.helpdesk.domain.dtos.ChamadoDTO;
-import com.pamela.helpdesk.service.ChamadoService;
+import com.pamela.helpdesk.services.ChamadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.swing.plaf.PanelUI;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
