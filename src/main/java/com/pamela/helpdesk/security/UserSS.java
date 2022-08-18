@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 public class UserSS implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
-    private String email;
-    private String senha;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Integer id;
+    private final String email;
+    private final String senha;
+    private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserSS(Integer id, String email, String senha, Set<Perfil> perfis) {
+    public UserSS(final Integer id, final String email, final String senha, final Set<Perfil> perfis) {
         this.id = id;
         this.email = email;
         this.senha = senha;

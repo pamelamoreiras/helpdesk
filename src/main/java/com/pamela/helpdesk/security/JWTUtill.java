@@ -17,7 +17,7 @@ public class JWTUtill {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String generateToken(String email){
+    public String generateToken(final String email){
         return Jwts.builder()
                 .setSubject(email)
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
@@ -26,12 +26,12 @@ public class JWTUtill {
 
     }
 
-    public boolean tokenValido(String token) {
-        Claims claims = getClaims(token);
+    public boolean tokenValido(final String token) {
+        final Claims claims = getClaims(token);
         if (claims != null){
-            String username = claims.getSubject();
-            Date expirationDate = claims.getExpiration();
-            Date now = new Date(System.currentTimeMillis());
+            final String username = claims.getSubject();
+            final Date expirationDate = claims.getExpiration();
+            final Date now = new Date(System.currentTimeMillis());
 
             if(username != null && expirationDate != null && now.before(expirationDate)){
                 return true;
@@ -40,16 +40,16 @@ public class JWTUtill {
         return false;
     }
 
-    private Claims getClaims(String token) {
+    private Claims getClaims(final String token) {
         try {
             return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
-        } catch (Exception e){
+        } catch (final Exception e){
             return null;
         }
     }
 
-    public String getUsername(String token) {
-        Claims claims = getClaims(token);
+    public String getUsername(final String token) {
+        final Claims claims = getClaims(token);
         if (claims != null){
             return claims.getSubject();
         }

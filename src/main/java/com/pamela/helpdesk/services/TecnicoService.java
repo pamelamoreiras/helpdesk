@@ -26,8 +26,8 @@ public class TecnicoService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-    public Tecnico findById(Integer id){
-        Optional<Tecnico> obj = tecnicoRepository.findById(id);
+    public Tecnico findById(final Integer id){
+        final Optional<Tecnico> obj = tecnicoRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
     }
 
@@ -35,16 +35,16 @@ public class TecnicoService {
         return tecnicoRepository.findAll();
     }
 
-    public Tecnico create(TecnicoDTO objDTO) {
+    public Tecnico create(final TecnicoDTO objDTO) {
         objDTO.setId(null);
         objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         validaPorCpfEEmail(objDTO);
-        Tecnico newObj = new Tecnico(objDTO);
+        final Tecnico newObj = new Tecnico(objDTO);
         return  tecnicoRepository.save(newObj);
     }
 
-    public void delete(Integer id) {
-        Tecnico obj = findById(id);
+    public void delete(final Integer id) {
+        final Tecnico obj = findById(id);
         if(obj.getChamados().size() > 0){
             throw new DataIntegrityViolationException("Técnico possui ordens de serviço e não pode ser deletado");
         }
@@ -52,7 +52,7 @@ public class TecnicoService {
         tecnicoRepository.deleteById(id);
     }
 
-    public Tecnico update(Integer id, TecnicoDTO objDTO) {
+    public Tecnico update(final Integer id, final TecnicoDTO objDTO) {
         objDTO.setId(id);
         Tecnico oldObj = findById(id);
         validaPorCpfEEmail(objDTO);
@@ -60,7 +60,7 @@ public class TecnicoService {
         return tecnicoRepository.save(oldObj);
     }
 
-    private void validaPorCpfEEmail(TecnicoDTO objDTO) {
+    private void validaPorCpfEEmail(final TecnicoDTO objDTO) {
         Optional<Pessoa> obj = pessoaRepository.findByCpf(objDTO.getCpf());
         if(obj.isPresent() && obj.get().getId() != objDTO.getId()){
             throw new DataIntegrityViolationException("CPF já cadastrado no sistema!");

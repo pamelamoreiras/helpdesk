@@ -15,20 +15,20 @@ import java.io.IOException;
 
 public class JWRAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private JWTUtill jwtUtill;
-    private UserDetailsService userDetailsService;
+    private final JWTUtill jwtUtill;
+    private final UserDetailsService userDetailsService;
 
-    public JWRAuthorizationFilter(AuthenticationManager authenticationManager, JWTUtill jwtUtill, UserDetailsService userDetailsService) {
+    public JWRAuthorizationFilter(final AuthenticationManager authenticationManager, final JWTUtill jwtUtill, final UserDetailsService userDetailsService) {
         super(authenticationManager);
         this.jwtUtill = jwtUtill;
         this.userDetailsService = userDetailsService;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String header = request.getHeader("Authorization");
+    protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain) throws IOException, ServletException {
+        final String header = request.getHeader("Authorization");
         if(header != null && header.startsWith("Bearer ")){
-            UsernamePasswordAuthenticationToken authToken = getAuthentication(header.substring(7));
+            final UsernamePasswordAuthenticationToken authToken = getAuthentication(header.substring(7));
 
             if (authToken != null){
                 SecurityContextHolder.getContext().setAuthentication(authToken);
@@ -38,10 +38,10 @@ public class JWRAuthorizationFilter extends BasicAuthenticationFilter {
         chain.doFilter(request, response);
     }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(String token) {
+    private UsernamePasswordAuthenticationToken getAuthentication(final String token) {
         if(jwtUtill.tokenValido(token)){
-            String username = jwtUtill.getUsername(token);
-            UserDetails details = userDetailsService.loadUserByUsername(username);
+            final String username = jwtUtill.getUsername(token);
+            final UserDetails details = userDetailsService.loadUserByUsername(username);
             return new UsernamePasswordAuthenticationToken(details.getUsername(), null,details.getAuthorities());
         }
         return null;

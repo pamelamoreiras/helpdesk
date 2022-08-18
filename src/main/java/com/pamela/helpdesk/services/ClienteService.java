@@ -26,8 +26,8 @@ public class ClienteService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-    public Cliente findById(Integer id){
-        Optional<Cliente> obj = clienteRepository.findById(id);
+    public Cliente findById(final Integer id){
+        final Optional<Cliente> obj = clienteRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
     }
 
@@ -35,15 +35,15 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Cliente create(ClienteDTO objDTO) {
+    public Cliente create(final ClienteDTO objDTO) {
         objDTO.setId(null);
         objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         validaPorCpfEEmail(objDTO);
-        Cliente newObj = new Cliente(objDTO);
+        final Cliente newObj = new Cliente(objDTO);
         return  clienteRepository.save(newObj);
     }
 
-    public Cliente update(Integer id, ClienteDTO objDTO) {
+    public Cliente update(final Integer id, final ClienteDTO objDTO) {
         objDTO.setId(id);
         Cliente oldObj = findById(id);
         validaPorCpfEEmail(objDTO);
@@ -51,7 +51,7 @@ public class ClienteService {
         return clienteRepository.save(oldObj);
     }
 
-    private void validaPorCpfEEmail(ClienteDTO objDTO) {
+    private void validaPorCpfEEmail(final ClienteDTO objDTO) {
         Optional<Pessoa> obj = pessoaRepository.findByCpf(objDTO.getCpf());
         if(obj.isPresent() && obj.get().getId() != objDTO.getId()){
             throw new DataIntegrityViolationException("CPF já cadastrado no sistema!");
@@ -63,8 +63,8 @@ public class ClienteService {
         }
     }
 
-    public void delete(Integer id) {
-        Cliente obj = findById(id);
+    public void delete(final Integer id) {
+        final Cliente obj = findById(id);
         if(obj.getChamados().size() > 0){
             throw new DataIntegrityViolationException("Técnico possui ordens de serviço e não pode ser deletado");
         }

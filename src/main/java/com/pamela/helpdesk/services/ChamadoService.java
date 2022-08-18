@@ -28,8 +28,8 @@ public class ChamadoService {
     @Autowired
     private ClienteService clienteService;
 
-    public Chamado findById(Integer id){
-        Optional<Chamado> obj = chamadoRepository.findById(id);
+    public Chamado findById(final Integer id){
+        final Optional<Chamado> obj = chamadoRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id));
     }
 
@@ -37,22 +37,22 @@ public class ChamadoService {
         return chamadoRepository.findAll();
     }
 
-    public Chamado create(@Valid ChamadoDTO objDTO) {
+    public Chamado create(@Valid final ChamadoDTO objDTO) {
         return chamadoRepository.save(newChamado(objDTO));
     }
 
-    public Chamado update(Integer id, ChamadoDTO objDTO) {
+    public Chamado update(final Integer id, final ChamadoDTO objDTO) {
         objDTO.setId(id);
         Chamado oldObj = findById(id);
         oldObj = newChamado(objDTO);
         return chamadoRepository.save(oldObj);
     }
 
-    private Chamado newChamado(ChamadoDTO obj){
-        Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
-        Cliente cliente = clienteService.findById(obj.getCliente());
+    private Chamado newChamado(final ChamadoDTO obj){
+        final Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
+        final Cliente cliente = clienteService.findById(obj.getCliente());
 
-        Chamado chamado = new Chamado();
+        final Chamado chamado = new Chamado();
         if (obj.getId() != null){
             chamado.setId(obj.getId());
         }
